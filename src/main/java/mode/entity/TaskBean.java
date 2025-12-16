@@ -14,6 +14,10 @@ public class TaskBean implements Serializable {
 	private String memo;
 	private Date create_datetime;
 	private Date update_datetime;
+	
+	public TaskBean() {
+		
+	}
 	public int getTask_id() {
 		return task_id;
 	}
