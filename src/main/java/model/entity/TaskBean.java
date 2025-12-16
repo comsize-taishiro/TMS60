@@ -1,4 +1,4 @@
-package mode.entity;
+package model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

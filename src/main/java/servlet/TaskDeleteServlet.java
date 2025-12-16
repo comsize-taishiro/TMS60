@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import mode.dao.TaskDeleteDAO;
+import model.dao.TaskDeleteDAO;
 
 /**
  * Servlet implementation class TaskDeleteServlet
