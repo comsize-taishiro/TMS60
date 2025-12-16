@@ -1,6 +1,7 @@
 package mode.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class TaskBean implements Serializable {
@@ -8,7 +9,7 @@ public class TaskBean implements Serializable {
 	private int task_id;
 	private String task_name;
 	private int category_id;
-	private LocalDateTime limit_date;
+	private LocalDate limit_date;
 	private String user_id;
 	private String status_code;
 	private String memo;
@@ -39,11 +40,11 @@ public class TaskBean implements Serializable {
 		this.category_id = category_id;
 	}
 
-	public LocalDateTime getLimit_date() {
+	public LocalDate getLimit_date() {
 		return limit_date;
 	}
 
-	public void setLimit_date(LocalDateTime limit_date) {
+	public void setLimit_date(LocalDate limit_date) {
 		this.limit_date = limit_date;
 	}
 
@@ -86,5 +87,7 @@ public class TaskBean implements Serializable {
 	public void setUpdate_datetime(LocalDateTime update_datetime) {
 		this.update_datetime = update_datetime;
 	}
+
+	
 
 }
