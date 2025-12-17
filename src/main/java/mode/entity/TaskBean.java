@@ -2,13 +2,14 @@ package mode.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class TaskBean implements Serializable {
 	
 	private int task_id;
 	private String task_name;
 	private int category_id;
-	private Date limit_date;
+	private LocalDate limit_date;
 	private String user_id;
 	private String status_code;
 	private String memo;
@@ -36,10 +37,10 @@ public class TaskBean implements Serializable {
 	public void setCategory_id(int category_id) {
 		this.category_id = category_id;
 	}
-	public Date getLimit_date() {
+	public LocalDate getLimit_date() {
 		return limit_date;
 	}
-	public void setLimit_date(Date limit_date) {
+	public void setLimit_date(LocalDate limit_date) {
 		this.limit_date = limit_date;
 	}
 	public String getUser_id() {
