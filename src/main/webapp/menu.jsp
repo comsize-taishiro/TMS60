@@ -8,7 +8,7 @@
 
 </head>
 <body>
-<form action="item-list-servlet" method="POST">
+<form action="task-registration-servlet" method="POST">
 		<h1>メニュー画面</h1>
 		<hr>
 		ようこそ！<%
@@ -16,17 +16,18 @@
 		
 		<%=name%>さん<br>
 		<br>
-		<input type="submit" value="商品一覧"><br>
+		<input type="submit" value="タスク登録"><br>
 	</form>
 	
-	<form action="item-add-servlet" method="GET">
+	<form action="task-list-servlet" method="POST">
 		<br>
-		<input type="submit" value="商品登録"><br>
+		<input type="submit" value="タスク一覧表示"><br>
 	</form>
 	
 	<form action="logout-success.jsp" method="POST">
 		<br>
 		<input type="submit" value="ログアウト"><br>
+		<hr>
 	</form>
 
 </body>

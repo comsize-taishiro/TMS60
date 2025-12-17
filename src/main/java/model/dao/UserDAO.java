@@ -1,4 +1,4 @@
-package mode.dao;
+package model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +27,7 @@ public class UserDAO {
 				//String name = res.getString("user_name");
 
 				userdata = new UserBean();
-				userdata.setUserName(res.getString("user_name"));
+				userdata.setUser_name(res.getString("user_name"));
 
 			}
 
