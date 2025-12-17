@@ -8,7 +8,7 @@
 
 </head>
 <body>
-<form action="item-list-servlet" method="POST">
+<form action="task-list-servlet" method="POST">
 		<h1>メニュー画面</h1>
 		<hr>
 		ようこそ！<%

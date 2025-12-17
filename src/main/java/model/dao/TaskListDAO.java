@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.entity.CategoryBean;
 import model.entity.TaskBean;
 
 
@@ -42,7 +43,21 @@ public class TaskListDAO {
 		}
 
 	return taskList;
-	
-	
 	}
+	
+	public List<CategoryBean> category()throws SQLException, ClassNotFoundException {
+		List<CategoryBean> categoryList = new ArrayList<CategoryBean>();
+		String sql = "SELECT * FROM t_task";
+		
+		
+		return null;
+		
+	}
+	
+	
+	
 }
+
+
+
+
