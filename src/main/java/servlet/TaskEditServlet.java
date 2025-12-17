@@ -1,12 +1,25 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import model.dao.SelectsDAO;
+import model.dao.TaskEditDAO;
+import model.entity.CategoryBean;
+import model.entity.StatusBean;
+import model.entity.TaskBean;
+import model.entity.UserBean;
 
 /**
  * Servlet implementation class TaskEditServlet
@@ -26,25 +39,88 @@ public class TaskEditServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * 選択したタスクの情報を入力欄のデフォルト値として渡す
+	 * input = 
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		String task_id = request.getParameter("task_id");
-		
+
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		//int task_id = Integer.parseInt(request.getParameter("task_id")); // 本番
+		int task_id = 1; // デバッグ
+		List<CategoryBean> catList = new ArrayList<>();
+		List<UserBean> userList = new ArrayList<>();
+		List<StatusBean> statList = new ArrayList<>();
+
 		//DAO生成
-		//DAOのメソッドにtask_idを渡し、そのidのレコードを取得。
+		SelectsDAO dao = new SelectsDAO();
+		//DAOのメソッドにtask_idを渡し、そのidのレコードを取得。selectedTaskに格納。
 		//レコードのカテゴリIDをカテゴリ名、ユーザIDをユーザ名、ステータスコードをステータス名に変換
-		//変換した情報を、新たなBeanに詰め、
+		//変換した情報を渡す
+		TaskBean selectedTask = null;
+		try {
+			selectedTask = dao.selectTask(task_id);
+			catList = dao.selectAllCategory();
+			userList = dao.selectAllUser();
+			statList = dao.selectAllStatus();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		session.setAttribute("selectedTask", selectedTask);
+		session.setAttribute("catList", catList);
+		session.setAttribute("userList", userList);
+		session.setAttribute("statList", statList);
+
+		// リクエストの転送
+		RequestDispatcher rd = request.getRequestDispatcher("task-edit-form.jsp");
+		rd.forward(request, response);
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 * 入力された情報を受け取ってタスクを更新する
+	 * 入力された情報(Bean)を受け取ってタスクを更新する
+	 * input = requestスコープに入って渡されるTaskBeanの要素が複数
+	 * output = 更新SQLを走らせた結果をもとに渡される"erroe"(boolean型)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+
+		//変数等の宣言
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		TaskEditDAO dao = new TaskEditDAO();
+
+		//requestスコープで渡した編集後タスクデータをDAOで反映
+		TaskBean newTask = new TaskBean();
+		newTask.setTask_name((String)request.getAttribute("task_name"));
+		newTask.setCategory_id((int)request.getAttribute("category_id"));
+		newTask.setLimit_date((LocalDate)request.getAttribute("limit_date"));
+		newTask.setUser_id((String)request.getAttribute("user_id"));
+		newTask.setStatus_code((String)request.getAttribute("status_code"));
+		newTask.setMemo((String)request.getAttribute("memo"));
+		
+		int count = 0;
+		try {
+			count = dao.updateTask(newTask);
+		} catch (ClassNotFoundException | IllegalArgumentException | SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		//タスクの編集がうまくいったかどうかによって、遷移先に送るエラー情報の可否を決める
+		boolean error = true;
+		if (count != 0) {
+			error = false;
+		}
+		request.setAttribute("error", error);
+
+		// リクエストの転送
+		RequestDispatcher rd = request.getRequestDispatcher("task-edit-result.jsp");
+		rd.forward(request, response);
+
 	}
 
 }
