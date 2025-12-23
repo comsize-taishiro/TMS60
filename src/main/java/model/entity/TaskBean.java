@@ -9,9 +9,12 @@ public class TaskBean implements Serializable {
 	private int task_id;
 	private String task_name;
 	private int category_id;
+	private String category_name;
 	private LocalDate limit_date;
 	private String user_id;
+	private String user_name;
 	private String status_code;
+	private String status_name;
 	private String memo;
 	private LocalDateTime create_datetime;
 	private LocalDateTime update_datetime;
@@ -39,6 +42,14 @@ public class TaskBean implements Serializable {
 	public void setCategory_id(int category_id) {
 		this.category_id = category_id;
 	}
+	
+	public String getCategory_name() {
+		return category_name;
+	}
+
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
+	}
 
 	public LocalDate getLimit_date() {
 		return limit_date;
@@ -56,6 +67,14 @@ public class TaskBean implements Serializable {
 		this.user_id = user_id;
 	}
 
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	
 	public String getStatus_code() {
 		return status_code;
 	}
@@ -63,6 +82,15 @@ public class TaskBean implements Serializable {
 	public void setStatus_code(String status_code) {
 		this.status_code = status_code;
 	}
+	
+	public String getStatus_name() {
+		return status_name;
+	}
+
+	public void setStatus_name(String status_name) {
+		this.status_name = status_name;
+	}
+	
 
 	public String getMemo() {
 		return memo;

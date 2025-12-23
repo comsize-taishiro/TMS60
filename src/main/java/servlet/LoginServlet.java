@@ -55,7 +55,7 @@ public class LoginServlet extends HttpServlet {
 			UserBean userdata = dao.search(user,password);
 			if (userdata != null) {
 				HttpSession session = request.getSession();
-				session.setAttribute("name",userdata.getUserName());
+				session.setAttribute("name",userdata.getUser_name());
 				
 				RequestDispatcher rd = request.getRequestDispatcher("menu.jsp");
 				rd.forward(request, response);
