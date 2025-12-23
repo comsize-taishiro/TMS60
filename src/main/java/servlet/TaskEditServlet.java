@@ -48,6 +48,9 @@ public class TaskEditServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		//int task_id = Integer.parseInt(request.getParameter("task_id")); // 本番
 		int task_id = 1; // デバッグ
+		
+		session.setAttribute("task_id", task_id);
+		
 		List<CategoryBean> catList = new ArrayList<>();
 		List<UserBean> userList = new ArrayList<>();
 		List<StatusBean> statList = new ArrayList<>();
@@ -95,12 +98,15 @@ public class TaskEditServlet extends HttpServlet {
 
 		//requestスコープで渡した編集後タスクデータをDAOで反映
 		TaskBean newTask = new TaskBean();
-		newTask.setTask_name((String)request.getAttribute("task_name"));
-		newTask.setCategory_id((int)request.getAttribute("category_id"));
-		newTask.setLimit_date((LocalDate)request.getAttribute("limit_date"));
-		newTask.setUser_id((String)request.getAttribute("user_id"));
-		newTask.setStatus_code((String)request.getAttribute("status_code"));
-		newTask.setMemo((String)request.getAttribute("memo"));
+		newTask.setTask_id((int)session.getAttribute("task_id"));
+		newTask.setTask_name(request.getParameter("task_name"));
+		newTask.setCategory_id(Integer.parseInt(request.getParameter("category_id")));
+		newTask.setLimit_date(LocalDate.parse(request.getParameter("limit_date")));
+		newTask.setUser_id(request.getParameter("user_id"));
+		newTask.setStatus_code(request.getParameter("status_code"));
+		newTask.setMemo(request.getParameter("memo"));
+		
+		request.setAttribute("newTask", newTask);
 		
 		int count = 0;
 		try {
