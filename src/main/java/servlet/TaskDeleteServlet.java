@@ -75,6 +75,7 @@ public class TaskDeleteServlet extends HttpServlet {
 		}
 
 		//タスクの削除がうまくいったかどうかによって、遷移先に送るエラー情報の可否を決める
+		String url = "task-delete-result";
 		boolean error = true;
 		if (count != 0) {
 			error = false;
@@ -82,7 +83,7 @@ public class TaskDeleteServlet extends HttpServlet {
 		request.setAttribute("error", error);
 
 		// リクエストの転送
-		RequestDispatcher rd = request.getRequestDispatcher("task-delete-result.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher(url);
 		rd.forward(request, response);
 
 	}
