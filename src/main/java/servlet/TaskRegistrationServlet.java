@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import mode.dao.TaskRegistrationDAO;
-import mode.entity.TaskBean;
+import model.dao.TaskRegistrationDAO;
+import model.entity.TaskBean;
 
 /**
  * Servlet implementation class TaskRegistrationServlet
