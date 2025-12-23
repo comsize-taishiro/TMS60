@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,9 +13,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import mode.dao.SelectsDAO;
 import mode.dao.TaskRegistrationDAO;
+import mode.entity.CategoryBean;
+import mode.entity.StatusBean;
 import mode.entity.TaskBean;
+import mode.entity.UserBean;
 
 /**
  * Servlet implementation class TaskRegistrationServlet
@@ -35,7 +42,37 @@ public class TaskRegistrationServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+
+		List<CategoryBean> catList = new ArrayList<>();
+		List<UserBean> userList = new ArrayList<>();
+		List<StatusBean> statList = new ArrayList<>();
+
+		//DAO生成
+		SelectsDAO dao = new SelectsDAO();
+		//レコードのカテゴリIDをカテゴリ名、ユーザIDをユーザ名、ステータスコードをステータス名に変換
+		//変換した情報を渡す
+		try {
+		    catList = dao.selectAllCategory();
+		    userList = dao.selectAllUser();
+		    statList = dao.selectAllStatus();
+		    
+		} catch (ClassNotFoundException | SQLException e) {
+		    e.printStackTrace();
+		}
+		// 新規登録なので selectedTask は空の状態で渡す（Nullで送るとJSPでエラーになる）
+	    TaskBean selectedTask = new TaskBean();
+
+		session.setAttribute("selectedTask", selectedTask);
+		session.setAttribute("catList", catList);
+		session.setAttribute("userList", userList);
+		session.setAttribute("statList", statList);
+
+		// リクエストの転送
+		RequestDispatcher rd = request.getRequestDispatcher("task-registration.jsp");
+		rd.forward(request, response);
+
 	}
 
 	/**
@@ -52,10 +89,32 @@ public class TaskRegistrationServlet extends HttpServlet {
 		
 		//エンコーディング
 		request.setCharacterEncoding("UTF-8");
+		
 		//受け取り
+		//空白パターン
+	    String blankDate = request.getParameter("limit_date");
+	    
+	    // 2. 未入力チェック
+	    if (blankDate == null || blankDate.isEmpty()) {
+	        request.setAttribute("errorMsg", "期限の日付を入力してください。");
+	        doGet(request, response);
+	        return;
+	    }
+		
+		//受け取り
+		LocalDate limit_date = LocalDate.parse(request.getParameter("limit_date"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		if (limit_date.isBefore(LocalDate.now())) {
+	        // (過去日)だった時のエラー文スコープセット
+	        request.setAttribute("errorMsg", "過去の日付は登録できません。");
+	        
+	        //doGetを呼び出して、プルダウンリストの再準備とJSPへの転送を行う
+	        doGet(request, response);
+	        //登録させない
+	        return;
+		}
+		
 		String task_name = request.getParameter("task_name");
 		int category_id = Integer.parseInt(request.getParameter("category_id"));
-		LocalDate limit_date = LocalDate.parse(request.getParameter("limit_date"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		String user_id = request.getParameter("user_id");
 		String status_code = request.getParameter("status_code");
 		String memo = request.getParameter("memo");
@@ -88,13 +147,13 @@ public class TaskRegistrationServlet extends HttpServlet {
 			register = "registration-success.jsp";
 		} else {
 			// 登録失敗時の転送先
-			//register = "registration-failure.jsp";
+			register = "registration-failure.jsp";
 		}
 
-		// リクエストの転送
+			// リクエストの転送
 				RequestDispatcher rd = request.getRequestDispatcher(register);
 				rd.forward(request, response);
-		
+				
 	}
 
 }

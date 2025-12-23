@@ -1,50 +1,86 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.time.LocalDate"%>
-<%@page import="java.util.Date"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List, java.time.LocalDate, mode.entity.*" %>
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>タスク登録画面</title>
+    <title>タスク登録画面</title>
 </head>
 <body>
-	<h1>タスク登録画面</h1>
+    <h2>タスク登録画面</h2>
+    <%//データ取得
+    List<CategoryBean> catList = (List<CategoryBean>) session.getAttribute("catList");
+    List<UserBean> userList = (List<UserBean>) session.getAttribute("userList");
+    List<StatusBean> statList = (List<StatusBean>) session.getAttribute("statList");
+    String errorMsg = (String) request.getAttribute("errorMsg");
+    %>
 
-	<form action="task-registration-servlet" method="POST">
+    <% if (errorMsg != null) { %>
+        <p>【登録エラー】 <%= errorMsg %></p>
+    <% } %>
 
-
-		①タスク名 <input type="text" name="task_name"><br> 
-		②カテゴリ情報 <input type="text" name="category_id"><br> 
-		③期限<input type="date" min = "<%= LocalDate currentDate = LocalDate.now(); %>" name="limit_date"><br> 
-		④担当者情報 <input type="text" name="user_id"> <br>
-		⑤ステータス情報 <select name="status_code">
-			<option value="00">00</option>
-			<%
-			// 00～99を出力
-			for (int i = 0; i <= 9; i++) {
-				for (int j = 1; j <= 9; j++) {
-			%>
-			<option value="<%=i + "" + j%>">
-				<%=i + "" + j%>
-			</option>
-
-			<%
-			}
-			}
-			%>
-
-		</select><br> 
-		
-		⑥メモ <input type="text" name="memo">
-		<input type="submit" value="登録実行"><br>
-	</form>
-
-	<form action="" method="POST">
-		<input type="submit" value="戻る"><br>
-	</form>
-
-
+    <form action="task-registration-servlet" method="POST">
+        <table border="1">
+            <tr>
+                <th>タスク名</th>
+                <td><input type="text" name="task_name" value=""></td> 
+            </tr>
+            <tr>
+                <th>カテゴリ情報</th>
+                <td>
+                    <select name="category_id">
+                        <% if (catList != null) { 
+                            for (int i = 0; i < catList.size(); i++) { 
+                                CategoryBean c = catList.get(i); // i番目を取り出す
+                        %>
+                            <option value="<%= c.getCategory_id() %>"><%= c.getCategory_name() %></option>
+                        <% } } %>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>期限</th>
+                <td><input type="date" name="limit_date" min="<%= LocalDate.now() %>" value=""></td>
+            </tr>   
+            <tr>
+                <th>担当者情報</th>
+                <td>
+                    <select name="user_id">
+                        <% if (userList != null) { 
+                            for (int i = 0; i < userList.size(); i++) { 
+                                UserBean u = userList.get(i);
+                        %>
+                            <option value="<%= u.getUser_id() %>"><%= u.getUser_name() %></option>
+                        <% } } %>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>ステータス情報</th> 
+                <td>
+                    <select name="status_code">
+                        <% if (statList != null) { 
+                            for (int i = 0; i < statList.size(); i++) { 
+                                StatusBean s = statList.get(i);
+                        %>
+                            <option value="<%= s.getStatus_code() %>"><%= s.getStatus_name() %></option>
+                        <% } } %>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>メモ</th> 
+                <td><input type="text" name="memo" value=""></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="登録実行"></td>
+                <td><input type="reset" value="リセット"></td>
+            </tr>
+        </table>
+    </form>
+    <br>
+    <form action="task-menu.jsp" method="POST">
+        <input type="submit" value="戻る">
+    </form>
 </body>
 </html>
