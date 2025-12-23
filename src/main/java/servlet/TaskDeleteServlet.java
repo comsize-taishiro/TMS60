@@ -23,7 +23,7 @@ import model.entity.UserBean;
 /**
  * Servlet implementation class TaskDeleteServlet
  */
-@WebServlet("/TaskDeleteServlet")
+@WebServlet("/task-delete-servlet")
 public class TaskDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,10 +37,10 @@ public class TaskDeleteServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 * タスク一覧から選んだタスクを、削除確認画面で表示するための情報を渡す。
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		//変数等の宣言
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
@@ -82,10 +82,10 @@ public class TaskDeleteServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 * タスク削除確認後、タスクを削除し、削除が正しく完了したか判定して画面遷移する。
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		//変数等の宣言
 		request.setCharacterEncoding("UTF-8");
 		TaskDeleteDAO dao = new TaskDeleteDAO();
@@ -111,7 +111,6 @@ public class TaskDeleteServlet extends HttpServlet {
 		// リクエストの転送
 		RequestDispatcher rd = request.getRequestDispatcher("task-delete-result.jsp");
 		rd.forward(request, response);
-
 	}
 
 }
