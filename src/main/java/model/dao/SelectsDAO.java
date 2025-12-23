@@ -1,4 +1,4 @@
-package mode.dao;
+package model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import mode.entity.CategoryBean;
-import mode.entity.StatusBean;
-import mode.entity.TaskBean;
-import mode.entity.UserBean;
+import model.entity.CategoryBean;
+import model.entity.StatusBean;
+import model.entity.TaskBean;
+import model.entity.UserBean;
 
 public class SelectsDAO {
 	public TaskBean selectTask(int task_id)
