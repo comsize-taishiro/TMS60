@@ -36,8 +36,7 @@
 			</tr>
 			<tr>
 				<th>期限</th>
-				<td><input type="date" name="limit_date"
-					value="<%=selectedTask.getLimit_date()%>"></td>
+				<td><%=selectedTask.getLimit_date()%></td>
 			</tr>
 			<tr>
 				<th>担当者情報</th>
