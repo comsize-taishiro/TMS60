@@ -29,10 +29,10 @@
 		%>
 		<tr>
 			<td><%=list.getTask_name()%></td>
-			<td><%=list.getCategory_id()%></td>
+			<td><%=list.getCategory_name()%></td>
 			<td><%=list.getLimit_date()%></td>
-			<td><%=list.getUser_id()%></td>
-			<td><%=list.getStatus_code()%></td>
+			<td><%=list.getUser_name()%></td>
+			<td><%=list.getStatus_name()%></td>
 			<td><%=list.getMemo()%></td>
 			<td><form action = "task-edit-servlet" method = "POST">
 			<input type = "submit" value = "編集">
