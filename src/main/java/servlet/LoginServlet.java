@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.dao.UserDAOTest;
+import model.dao.UserDAO;
 import model.entity.UserBean;
 
 /**
@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 		String user = request.getParameter("user");
 		String password = request.getParameter("password");
 		
-		UserDAOTest dao = new UserDAOTest();
+		UserDAO dao = new UserDAO();
 		try {
 			// DAOの利用
 			UserBean userdata = dao.search(user,password);
