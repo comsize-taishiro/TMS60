@@ -1,4 +1,4 @@
-package servlet;
+package Servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,20 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.dao.UserDAOTest;
+import model.dao.UserDAO;
 import model.entity.UserBean;
 
 /**
  * Servlet implementation class LoginServlet
  */
 @WebServlet("/login-servlet")
-public class LoginServlet extends HttpServlet {
+public class LoginServletTest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public LoginServletTest() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -49,13 +49,13 @@ public class LoginServlet extends HttpServlet {
 		String user = request.getParameter("user");
 		String password = request.getParameter("password");
 		
-		UserDAOTest dao = new UserDAOTest();
+		UserDAO dao = new UserDAO();
 		try {
 			// DAOの利用
 			UserBean userdata = dao.search(user,password);
 			if (userdata != null) {
 				HttpSession session = request.getSession();
-				session.setAttribute("name",userdata.getUser_name());
+				session.setAttribute("name",userdata.getUserName());
 				
 				RequestDispatcher rd = request.getRequestDispatcher("menu.jsp");
 				rd.forward(request, response);
