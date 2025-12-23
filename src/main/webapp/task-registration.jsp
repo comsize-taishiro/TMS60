@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.List, java.time.LocalDate, mode.entity.*" %>
+<%@ page import="java.util.List, java.time.LocalDate, model.entity.*" %>
 
 <!DOCTYPE html>
 <html>
