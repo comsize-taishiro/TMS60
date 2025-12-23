@@ -34,10 +34,10 @@
 			<td><%=list.getUser_name()%></td>
 			<td><%=list.getStatus_name()%></td>
 			<td><%=list.getMemo()%></td>
-			<td><form action = "task-edit-servlet" method = "POST">
+			<td><form action = "task-edit-servlet?task_id=<%=list.getTask_id()%>" method = "GET">
 			<input type = "submit" value = "編集">
 			</form></td>
-			<td><form action = "task-delete-servlet" method = "POST">
+			<td><form action = "task-delete-servlet?task_id=<%=list.getTask_id()%>" method = "GET">
 			<input type = "submit" value = "削除">
 			</form></td>
 			<td><form action = "task-delete-servlet" method = "POST">
