@@ -2,6 +2,8 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.dao.SelectsDAO;
 import model.dao.TaskDeleteDAO;
+import model.entity.CategoryBean;
+import model.entity.StatusBean;
+import model.entity.TaskBean;
+import model.entity.UserBean;
 
 /**
  * Servlet implementation class TaskDeleteServlet
@@ -37,17 +44,37 @@ public class TaskDeleteServlet extends HttpServlet {
 		//変数等の宣言
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		int task_id = Integer.parseInt(request.getParameter("task_id"));
-		
-		/*
-		 * 
-		 * ここに選択したタスクの情報を取得する処理を実装
-		 * 
-		 */
-		
+		//int task_id = Integer.parseInt(request.getParameter("task_id")); // 本番
+		int task_id = 1; // デバッグ
+
 		//セッションに選択したタスクIDを格納
 		session.setAttribute("task_id", task_id);
-		
+
+		List<CategoryBean> catList = new ArrayList<>();
+		List<UserBean> userList = new ArrayList<>();
+		List<StatusBean> statList = new ArrayList<>();
+
+		//DAO生成
+		SelectsDAO dao = new SelectsDAO();
+		//DAOのメソッドにtask_idを渡し、そのidのレコードを取得。selectedTaskに格納。
+		//レコードのカテゴリIDをカテゴリ名、ユーザIDをユーザ名、ステータスコードをステータス名に変換
+		//変換した情報を渡す
+		TaskBean selectedTask = null;
+		try {
+			selectedTask = dao.selectTask(task_id);
+			catList = dao.selectAllCategory();
+			userList = dao.selectAllUser();
+			statList = dao.selectAllStatus();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		session.setAttribute("selectedTask", selectedTask);
+		session.setAttribute("catList", catList);
+		session.setAttribute("userList", userList);
+		session.setAttribute("statList", statList);
+
 		// リクエストの転送
 		RequestDispatcher rd = request.getRequestDispatcher("task-delete-confirm.jsp");
 		rd.forward(request, response);
