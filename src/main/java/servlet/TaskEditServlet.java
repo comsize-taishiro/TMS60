@@ -46,8 +46,8 @@ public class TaskEditServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		//int task_id = Integer.parseInt(request.getParameter("task_id")); // 本番
-		int task_id = 1; // デバッグ
+		int task_id = Integer.parseInt(request.getParameter("task_id")); // 本番
+		//int task_id = 1; // デバッグ
 		
 		session.setAttribute("task_id", task_id);
 		
