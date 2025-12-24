@@ -34,14 +34,17 @@
 			<td><%=list.getUser_name()%></td>
 			<td><%=list.getStatus_name()%></td>
 			<td><%=list.getMemo()%></td>
-			<td><form action = "task-edit-servlet?task_id=<%=list.getTask_id()%>" method = "GET">
+			<td><form action = "task-edit-servlet" method = "GET">
+			<input type="hidden" name="task_id" value="<%=list.getTask_id()%>">
 			<input type = "submit" value = "編集">
 			</form></td>
-			<td><form action = "task-delete-servlet?task_id=<%=list.getTask_id()%>" method = "GET">
+			<td><form action = "task-delete-servlet" method = "GET">
+			<input type="hidden" name="task_id" value="<%=list.getTask_id()%>">
 			<input type = "submit" value = "削除">
 			</form></td>
-			<td><form action = "task-delete-servlet" method = "POST">
-			<input type = "submit" value = "追加">
+			<td><form action = "task-comment-servlet" method = "GET">
+			<input type="hidden" name="task_id" value="<%=list.getTask_id()%>">
+			<input type = "submit" value = "コメント">
 			</form></td>
 		</tr>
 		
