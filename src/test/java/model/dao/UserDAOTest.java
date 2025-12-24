@@ -1,10 +1,11 @@
+package model.dao;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
 
-import model.dao.UserDAO;
 import model.entity.UserBean;
 
 class UserDAOTest {
@@ -30,7 +31,7 @@ class UserDAOTest {
 			
 			//検証
 			assertNotNull(bean);
-			assertEquals("shirahata",bean.getUserName());
+			assertEquals("shirahata",bean.getUser_name());
 			
 		}
 		
