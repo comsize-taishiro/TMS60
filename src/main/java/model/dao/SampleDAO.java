@@ -1,4 +1,4 @@
-package mode.dao;
+package model.dao;
 
 public class SampleDAO {
 

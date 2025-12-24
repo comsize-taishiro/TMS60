@@ -15,12 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import mode.dao.SelectsDAO;
-import mode.dao.TaskRegistrationDAO;
-import mode.entity.CategoryBean;
-import mode.entity.StatusBean;
-import mode.entity.TaskBean;
-import mode.entity.UserBean;
+import model.dao.SelectsDAO;
+import model.dao.TaskRegistrationDAO;
+import model.entity.CategoryBean;
+import model.entity.StatusBean;
+import model.entity.TaskBean;
+import model.entity.UserBean;
 
 /**
  * Servlet implementation class TaskRegistrationServlet
