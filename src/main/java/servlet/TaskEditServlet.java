@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,11 +111,18 @@ public class TaskEditServlet extends HttpServlet {
 		
 		int count = 0;
 		try {
+			LocalDate limit_date = LocalDate.parse(request.getParameter("limit_date"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			if (limit_date.isBefore(LocalDate.now())) {
+				count = 0;
+			}else {
 			count = dao.updateTask(newTask);
+			}
 		} catch (ClassNotFoundException | IllegalArgumentException | SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
+		
+		
 
 		//タスクの編集がうまくいったかどうかによって、遷移先に送るエラー情報の可否を決める
 		boolean error = true;

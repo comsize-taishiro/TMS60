@@ -74,7 +74,7 @@
 		</form>
 		</td>
 
-		<td><form action="task-list.jsp" method="POST">
+		<td><form action="task-list-servlet" method="POST">
 				<input type="submit" value="キャンセル">
 			</form></td>
 		</tr>

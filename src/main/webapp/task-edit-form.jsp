@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"
 	import="java.util.ArrayList, java.util.List, 
 	model.entity.CategoryBean, model.entity.StatusBean, 
-	model.entity.UserBean, model.entity.TaskBean"%>
+	model.entity.UserBean, model.entity.TaskBean, java.time.LocalDate"%>
 
 <!DOCTYPE html>
 <html>
@@ -39,7 +39,7 @@
 		</tr>
 		<tr>
 			<th>期限</th>
-			<td><input type="date" name="limit_date"
+			<td><input type="date" name="limit_date" min="<%= LocalDate.now() %>" 
 				value="<%=selectedTask.getLimit_date()%>"></td>
 		</tr>
 		<tr>

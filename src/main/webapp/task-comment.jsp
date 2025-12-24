@@ -15,7 +15,6 @@
 	TaskBean selectedTask = (TaskBean) session.getAttribute("selectedTask");
 	%>
 	<table>
-		<form action="task-delete-servlet" method="POST">
 			<tr>
 				<th>タスク名</th>
 				<td><%=selectedTask.getTask_name()%></td>
@@ -73,7 +72,6 @@
 
 	<table border=1>
 		<tr>
-			<th>No</th>
 			<th>投稿者</th>
 			<th>コメント</th>
 			<th>投稿日時</th>
@@ -84,7 +82,6 @@
 		for (CommentBean comment : comments) {
 		%>
 		<tr>
-			<td><%=comment.getComment_id()%></td>
 			<%
 			String commentUser = null;
 			for (UserBean u : userList) {
