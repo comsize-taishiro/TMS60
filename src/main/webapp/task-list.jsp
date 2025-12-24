@@ -31,10 +31,10 @@
 		<tr>
 			<td><%=list.getTask_name()%></td>
 			<td><%=list.getCategory_name()%></td>
-			<td><%=list.getLimit_date()%></td>
+			<td><%if(list.getMemo()!=null){%><%=list.getLimit_date()%><%} %></td>
 			<td><%=list.getUser_name()%></td>
 			<td><%=list.getStatus_name()%></td>
-			<td><%=list.getMemo()%></td>
+			<td><%if(list.getMemo()!=null){%><%=list.getMemo()%><%} %></td>
 			<td>
 				<%
 				if (list.getUser_name().equals(user_name)) {
