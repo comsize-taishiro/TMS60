@@ -71,7 +71,7 @@
 			</tr>
 	</table>
 
-	<table>
+	<table border=1>
 		<tr>
 			<th>No</th>
 			<th>投稿者</th>
@@ -118,8 +118,14 @@
 		<input type="hidden" name="UpdateStatus" value="-1">
 		<!-- valueが-1の場合は投稿、それ以外の場合は値＝コメントidで削除 -->
 
-		<input type="text" name="new_comment"><br> <input
+		<textarea name="new_comment"></textarea><br> <input
 			type="submit" value="投稿する"> <input type="reset" value="リセット">
+	</form>
+	<br>
+	<br>
+	<form action="task-list-servlet" method="POST">
+		<br>
+		<input type="submit" value="タスク一覧表示へ戻る"><br>
 	</form>
 </body>
 </html>
