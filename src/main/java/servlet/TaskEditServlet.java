@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +47,11 @@ public class TaskEditServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		//int task_id = Integer.parseInt(request.getParameter("task_id")); // 本番
-		int task_id = 1; // デバッグ
+		int task_id = Integer.parseInt(request.getParameter("task_id")); // 本番
+		//int task_id = 1; // デバッグ
+		
+		session.setAttribute("task_id", task_id);
+		
 		List<CategoryBean> catList = new ArrayList<>();
 		List<UserBean> userList = new ArrayList<>();
 		List<StatusBean> statList = new ArrayList<>();
@@ -95,20 +99,30 @@ public class TaskEditServlet extends HttpServlet {
 
 		//requestスコープで渡した編集後タスクデータをDAOで反映
 		TaskBean newTask = new TaskBean();
-		newTask.setTask_name((String)request.getAttribute("task_name"));
-		newTask.setCategory_id((int)request.getAttribute("category_id"));
-		newTask.setLimit_date((LocalDate)request.getAttribute("limit_date"));
-		newTask.setUser_id((String)request.getAttribute("user_id"));
-		newTask.setStatus_code((String)request.getAttribute("status_code"));
-		newTask.setMemo((String)request.getAttribute("memo"));
+		newTask.setTask_id((int)session.getAttribute("task_id"));
+		newTask.setTask_name(request.getParameter("task_name"));
+		newTask.setCategory_id(Integer.parseInt(request.getParameter("category_id")));
+		newTask.setLimit_date(LocalDate.parse(request.getParameter("limit_date")));
+		newTask.setUser_id(request.getParameter("user_id"));
+		newTask.setStatus_code(request.getParameter("status_code"));
+		newTask.setMemo(request.getParameter("memo"));
+		
+		request.setAttribute("newTask", newTask);
 		
 		int count = 0;
 		try {
+			LocalDate limit_date = LocalDate.parse(request.getParameter("limit_date"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			if (limit_date.isBefore(LocalDate.now())) {
+				count = 0;
+			}else {
 			count = dao.updateTask(newTask);
+			}
 		} catch (ClassNotFoundException | IllegalArgumentException | SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
+		
+		
 
 		//タスクの編集がうまくいったかどうかによって、遷移先に送るエラー情報の可否を決める
 		boolean error = true;

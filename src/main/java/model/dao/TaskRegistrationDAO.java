@@ -1,11 +1,11 @@
-package mode.dao;
+package model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-import mode.entity.TaskBean;
+import model.entity.TaskBean;
 
 public class TaskRegistrationDAO {
 	public int insert(TaskBean task) throws SQLException, ClassNotFoundException {
