@@ -12,7 +12,7 @@
 <form action="login-servlet" method="POST">
 		<h1>ユーザIDとパスワードを入力してください。</h1><br>
 		ユーザID<input type="text" name="user"><br>
-		パスワード<input type="text" name="password"><br>
+		パスワード<input type="password" name="password"><br>
 		<br>
 		<input type="submit" value="ログイン">
 		<input type="reset" value="取消">
