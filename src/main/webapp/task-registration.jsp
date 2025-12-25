@@ -79,7 +79,7 @@
         </table>
     </form>
     <br>
-    <form action="task-menu.jsp" method="POST">
+    <form action="menu.jsp" method="POST">
         <input type="submit" value="戻る">
     </form>
 </body>
